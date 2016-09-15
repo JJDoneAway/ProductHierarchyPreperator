@@ -3,26 +3,29 @@ package de.hoehne.myfirsttest;
 public class MyFirstClass {
 
 	public static void main(String[] args) {
-		Double myDouble = new Double(5.0);
-		double myDifferentDouble = 5.0;
-		Double myTotalDifferentDouble = 6.0;
-		
-		System.out.println(myDouble);
 
-		String myFormat = "|%15s|%15s|%15s|";
+		int steps = 10;
 
-		String[][] myArguments = { { "a", "b", "c" }, { "µ", "ħ", "ĸ" } };
-		System.out.printf(myFormat, myArguments[1]);
+		Double[][] result = new Double[steps + 1][2];
 
-		System.out.println("\n----------------------------------------------");
+		for (int i = 0; i <= steps; i++) {
 
-		String myFormat2 = "|%15f|%15f|%15f|";
+			double x = (Math.PI / steps) * i - Math.PI / 2;
 
-		Double[][] myArguments2 = { { 1.0, 2.0, 3.0 }, { 4.0, 5.3, 6.4 } };
-		System.out.printf(myFormat2, myArguments2[0]);
+			double y = Math.sin(x);
 
-		double[][] myArguments3 = { { 1.0, 2.0, 3.0 }, { 4.0, 5.3, 6.4 } };
-		System.out.println(myArguments3[0]);
+			result[i][0] = x;
+			result[i][1] = y;
+
+		}
+
+		System.out.println("|f(x)      |y         |");
+		System.out.println("|----------+----------|");
+
+		for (Double[] set : result) {
+			System.out.printf("|%10.4f|%10.4f|\n", set[0], set[1]);
+		}
+		System.out.println("|----------+----------|");
 
 	}
 
