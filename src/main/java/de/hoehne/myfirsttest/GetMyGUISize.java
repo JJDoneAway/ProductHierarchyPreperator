@@ -29,10 +29,18 @@ import javax.swing.JFrame;
 
 public class GetMyGUISize extends JApplet {
 
-	Dimension totalSize;
-
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.drawString(this.getSize().toString(), 100, 100);
+		
+		
+		int width = (int) this.getSize().getWidth();
+		int height = (int) this.getSize().getHeight();
+		
+		
+		g2.drawLine(0, 0, width/2, height/2);
+		
 
 	}
 
@@ -41,7 +49,7 @@ public class GetMyGUISize extends JApplet {
 		f.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
-			}
+							}
 					
 		});
 		
@@ -56,25 +64,19 @@ public class GetMyGUISize extends JApplet {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				
+				applet.repaint();
+				
 				System.out.println(e.getComponent().getSize());
 				
 			}
 		
 		});
 		
-		applet.addMouseMotionListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				
-				System.out.println(e.getX());
-			}
-			
-		});
+
 		
 		applet.init();
 		f.pack();
-		f.setSize(new Dimension(550, 100));
+		f.setSize(new Dimension(1000, 600));
 		f.setVisible(true);
 	}
 
