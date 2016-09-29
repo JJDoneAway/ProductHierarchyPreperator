@@ -5,14 +5,12 @@ import static java.lang.System.out;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class JavaStreamExamples {
@@ -93,9 +91,10 @@ public class JavaStreamExamples {
 
 		final CounterMap result = Files.lines(Paths.get("./src/main/resources/text.txt"))//
 				.parallel()//
-				.flatMap(line -> Stream.of(line.trim().split("\\W+")))//
+				.flatMap(line -> Stream.of(line.trim().split(" ")))//
 				.filter(word -> !word.trim().equals(""))//
-				.filter(word -> !word.matches(".*\\d+.*"))//
+				.filter(word -> word.matches("\\w+"))//
+				.filter(word -> word.matches("\\D+"))//
 				.map(String::toLowerCase)//
 				.collect(CounterMap::new, CounterMap::put, CounterMap::putAll);
 
@@ -128,12 +127,8 @@ public class JavaStreamExamples {
 			return container.entrySet();
 		}
 
-		public Map<String, Integer> getContainer() {
-			return container;
-		}
-
 		public void putAll(CounterMap map) {
-			for (Entry<String, Integer> element : map.getContainer().entrySet()) {
+			for (Entry<String, Integer> element : map.container.entrySet()) {
 				put(element.getKey(), element.getValue());
 			}
 		}
