@@ -1,20 +1,15 @@
 package de.hoehne.myfirsttest;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Line2D;
 
-import javax.swing.JApplet;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /* 
 /**
@@ -27,7 +22,7 @@ import javax.swing.JFrame;
  * uses the Java 2D APIs to define and render the graphics and text.
  */
 
-public class GetMyGUISize extends JApplet {
+public class GetMyGUISize extends JPanel {
 
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
@@ -56,15 +51,15 @@ public class GetMyGUISize extends JApplet {
 		
 		
 		
-		JApplet applet = new GetMyGUISize();
-		f.getContentPane().add("Center", applet);
+		GetMyGUISize canvas = new GetMyGUISize();
+		f.getContentPane().add("Center", canvas);
 		
-		applet.addComponentListener(new ComponentAdapter() {
+		canvas.addComponentListener(new ComponentAdapter() {
 		
 			@Override
 			public void componentResized(ComponentEvent e) {
 				
-				applet.repaint();
+				canvas.repaint();
 				
 				System.out.println(e.getComponent().getSize());
 				
@@ -74,7 +69,6 @@ public class GetMyGUISize extends JApplet {
 		
 
 		
-		applet.init();
 		f.pack();
 		f.setSize(new Dimension(1000, 600));
 		f.setVisible(true);
