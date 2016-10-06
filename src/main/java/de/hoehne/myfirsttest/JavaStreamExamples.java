@@ -17,7 +17,6 @@ public class JavaStreamExamples {
 
 	public static void main(String[] args) throws Exception {
 		sum_short_nice();
-
 		countingWords();
 	}
 
@@ -106,7 +105,7 @@ public class JavaStreamExamples {
 		out.println("Whole list of words sorted by occurrence");
 		out.println("-----------------------------------------");
 		result.entrySet().stream().sorted((i, j) -> i.getValue().compareTo(j.getValue()))
-		.forEachOrdered(value -> out.printf("Word %25s %5d times%n", value.getKey(), value.getValue()));
+				.forEachOrdered(value -> out.printf("Word %25s %5d times%n", value.getKey(), value.getValue()));
 
 	}
 

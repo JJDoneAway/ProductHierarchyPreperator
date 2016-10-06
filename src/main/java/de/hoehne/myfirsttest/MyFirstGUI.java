@@ -64,6 +64,7 @@ public class MyFirstGUI extends JApplet {
         f.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         });
+        
         JApplet applet = new MyFirstGUI();
         f.getContentPane().add("Center", applet);
         applet.init();
