@@ -1,4 +1,4 @@
-package de.hoehne.myfirsttest;
+package de.hoehne.myfirsttest.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -64,6 +64,7 @@ public class MyFirstGUI extends JApplet {
         f.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         });
+            
         
         JApplet applet = new MyFirstGUI();
         f.getContentPane().add("Center", applet);

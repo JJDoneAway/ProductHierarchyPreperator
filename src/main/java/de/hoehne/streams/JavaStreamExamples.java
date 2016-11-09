@@ -1,4 +1,4 @@
-package de.hoehne.myfirsttest;
+package de.hoehne.streams;
 
 import static java.lang.System.out;
 
@@ -16,8 +16,10 @@ import java.util.stream.Stream;
 public class JavaStreamExamples {
 
 	public static void main(String[] args) throws Exception {
-		sum_short_nice();
-		countingWords();
+//		sum_short_nice();
+//		countingWords();
+		
+		try_peek();
 	}
 
 	/**
@@ -74,6 +76,16 @@ public class JavaStreamExamples {
 		final BigInteger reduce = Stream.of("1", "2", "3", "4")//
 				.parallel()//
 				.map(BigInteger::new)//
+				.reduce(BigInteger.ZERO, BigInteger::add, BigInteger::add);
+
+		out.println(reduce);
+	}
+
+	public static void try_peek() {
+
+		final BigInteger reduce = Stream.of("1", "2", "3", "4")//
+				.parallel()//
+				.peek(out::println).map(BigInteger::new)//
 				.reduce(BigInteger.ZERO, BigInteger::add, BigInteger::add);
 
 		out.println(reduce);

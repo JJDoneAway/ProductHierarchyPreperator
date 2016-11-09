@@ -1,4 +1,4 @@
-package de.hoehne.myfirsttest;
+package de.hoehne.rxjava;
 
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import de.hoehne.myfirsttest.JavaStreamExamples.CounterMap;
+import de.hoehne.streams.JavaStreamExamples.CounterMap;
 import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Subscriber;
 
 public class RxJavaExample {
 
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception {
 		simpleStream();
 		countingWords();
 	}
@@ -37,15 +37,15 @@ public class RxJavaExample {
 
 	public static void countingWords() throws Exception {
 		Observable.//
-		create(new LineReader(new FileInputStream("./src/main/resources/text.txt"))).
-		flatMap(line -> Observable.from(line.split(" "))).//
-		filter(word -> !word.trim().equals("")).//
-		filter(word -> word.matches("\\w+")).//
-		filter(word -> word.matches("\\D+")).//
-		map(String::toLowerCase).//
-		reduce(new CounterMap(), CounterMap::put).//
-		flatMap(sortedMap -> Observable.from(sortedMap.container.entrySet())).//
-		subscribe(value -> out.printf("Word %25s %5d times%n", value.getKey(), value.getValue()), err::println);
+				create(new LineReader(new FileInputStream("./src/main/resources/text.txt")))
+				.flatMap(line -> Observable.from(line.split(" "))).//
+				filter(word -> !word.trim().equals("")).//
+				filter(word -> word.matches("\\w+")).//
+				filter(word -> word.matches("\\D+")).//
+				map(String::toLowerCase).//
+				reduce(new CounterMap(), CounterMap::put).//
+				flatMap(sortedMap -> Observable.from(sortedMap.container.entrySet())).//
+				subscribe(value -> out.printf("Word %25s %5d times%n", value.getKey(), value.getValue()), err::println);
 
 	}
 
@@ -77,7 +77,7 @@ public class RxJavaExample {
 		}
 
 	}
-	
+
 	public static class CounterMap {
 		private Map<String, Integer> container = new HashMap<String, Integer>();
 

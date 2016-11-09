@@ -19,6 +19,22 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext.rx</groupId>
+			<artifactId>jersey-rx-client-rxjava</artifactId>
+			<version>2.24</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>2.24</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-jdk-http</artifactId>
+			<version>2.24</version>
+		</dependency>
 
 	</dependencies>
 

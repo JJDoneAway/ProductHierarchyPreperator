@@ -1,4 +1,4 @@
-package de.hoehne.myfirsttest;
+package de.hoehne.myfirsttest.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

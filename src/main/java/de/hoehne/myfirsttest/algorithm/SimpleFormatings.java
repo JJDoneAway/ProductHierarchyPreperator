@@ -1,4 +1,4 @@
-package de.hoehne.myfirsttest;
+package de.hoehne.myfirsttest.algorithm;
 
 public class SimpleFormatings {
 
