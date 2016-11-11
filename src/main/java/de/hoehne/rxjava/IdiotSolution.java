@@ -1,12 +1,17 @@
 package de.hoehne.rxjava;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 
+import de.hoehne.rxjava.SampleProducServer.Price;
 import de.hoehne.rxjava.SampleProducServer.Product;
 import de.hoehne.rxjava.SampleProducServer.Recommendation;
 
@@ -23,6 +28,7 @@ public class IdiotSolution {
 		try {
 			SampleProducServer.runServer();
 
+			final long start = System.currentTimeMillis();
 			final Client client = ClientBuilder.newClient();
 			final WebTarget target = client.target("http://localhost:8080");
 
@@ -32,16 +38,28 @@ public class IdiotSolution {
 
 			for (Product product : response) {
 
-				Recommendation recommendation = target.path("recommendation").path(product.getId().toString()).request()
-						.get(new GenericType<SampleProducServer.Recommendation>() {
+				Recommendation recommendation = target.path("recommendations").path(product.getId().toString())
+						.request().get(new GenericType<Recommendation>() {
 						});
 
-				System.out.printf("Product %d with recommendation %d\n", product.getId(),
-						recommendation.getRecommendation());
+				Price price = target.path("price").path(product.getId().toString()).request()
+						.get(new GenericType<Price>() {
+						});
+
+				System.out.printf("Product %d with recommendation %d for %.2f€\n", product.getId(),
+						recommendation.getRecommendation(), price.getPrice());
 
 			}
 
-		} catch (Exception e) {
+			final long millis = System.currentTimeMillis() - start;
+
+			DateFormat fmt = new SimpleDateFormat(":mm:ss.SSS");
+			fmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+			System.out.println("It took " + (millis / 3600000/* hours */) + fmt.format(new Date(millis)));
+
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		} finally {
 			System.exit(0);

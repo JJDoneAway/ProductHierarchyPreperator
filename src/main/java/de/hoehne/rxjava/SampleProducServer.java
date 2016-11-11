@@ -7,11 +7,12 @@ import java.util.Random;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.UriBuilder;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -29,15 +30,10 @@ import com.sun.net.httpserver.HttpServer;
 public class SampleProducServer {
 
 	private static Product[] products = new Product[10];
-	private static Recommendation[] recomondations = new Recommendation[10];
-	private static Price[] prices = new Price[10];
 
 	static {
 		for (int i = 0; i < products.length; i++) {
 			products[i] = new Product();
-			recomondations[i] = new Recommendation(products[i].getId());
-			prices[i] = new Price(products[i].getId());
-
 		}
 	}
 
@@ -65,30 +61,15 @@ public class SampleProducServer {
 	@Path("recommendations/{id}")
 	public Recommendation getRecommendation(@PathParam("id") Integer productId) {
 		sleep();
-		for (int i = 0; i < recomondations.length; i++) {
-			Recommendation recomondation = recomondations[i];
-			if (recomondation.getProductId().equals(productId)) {
-				return recomondation;
-			}
-		}
-
-		System.out.println("Throw 404");
-		throw new WebApplicationException("Product " + productId + " is not known.", 404);
+		return new Recommendation(productId);
 	}
 
 	@GET
 	@Path("price/{id}")
 	public Price getPrice(@PathParam("id") Integer productId) {
 		sleep();
-		for (int i = 0; i < prices.length; i++) {
-			Price price = prices[i];
-			if (price.getProductId().equals(productId)) {
-				return price;
-			}
-		}
-
-		System.out.println("Throw 404");
-		throw new WebApplicationException("Product " + productId + " is not known.", 404);
+		final Price price = new Price(productId);
+		return price;
 	}
 
 	private void sleep() {
@@ -108,26 +89,32 @@ public class SampleProducServer {
 			return id;
 		}
 
+		@Override
+		public String toString() {
+			return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", id).toString();
+		}
+
 	}
 
 	@XmlRootElement
 	public static class Recommendation {
+		@XmlElement
 		private Integer productId;
-		private Integer recommendation = new Random().nextInt(8) + 1;
+		@XmlElement
+		private Integer recommendation;
 
 		public Recommendation() {
 		}
 
 		public Recommendation(Integer productId) {
 			this.productId = productId;
+			this.recommendation = new Random().nextInt(8) + 1;
 		}
 
-		@XmlElement
 		public Integer getProductId() {
 			return productId;
 		}
 
-		@XmlElement
 		public Integer getRecommendation() {
 			return recommendation;
 		}
@@ -135,22 +122,23 @@ public class SampleProducServer {
 
 	@XmlRootElement
 	public static class Price {
+		@XmlElement
 		private Integer productId;
-		private BigDecimal price = BigDecimal.valueOf(new Random().nextDouble() * 100 + 1);
+		@XmlElement
+		private BigDecimal price;
 
 		public Price() {
 		}
 
 		public Price(Integer productId) {
 			this.productId = productId;
+			this.price = BigDecimal.valueOf(new Random().nextDouble() * 100 + 1);
 		}
 
-		@XmlElement
 		public Integer getProductId() {
 			return productId;
 		}
 
-		@XmlElement
 		public BigDecimal getPrice() {
 			return price;
 		}

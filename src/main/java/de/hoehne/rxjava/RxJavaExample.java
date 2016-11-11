@@ -10,10 +10,9 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import de.hoehne.streams.JavaStreamExamples.CounterMap;
 import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Subscriber;
