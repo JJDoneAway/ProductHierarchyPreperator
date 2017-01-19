@@ -11,15 +11,16 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class JavaStreamExamples {
 
 	public static void main(String[] args) throws Exception {
-//		sum_short_nice();
-//		countingWords();
-		
-		try_peek();
+		// sum_short_nice();
+		countingWords();
+
+		// try_peek();
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class JavaStreamExamples {
 
 		final CounterMap result = Files.lines(Paths.get("./src/main/resources/text.txt"))//
 				.parallel()//
-				.flatMap(line -> Stream.of(line.trim().split(" ")))//
+				.flatMap(Pattern.compile("[^\\p{L}]")::splitAsStream)//
 				.filter(word -> !word.trim().equals(""))//
 				.filter(word -> word.matches("\\w+"))//
 				.filter(word -> word.matches("\\D+"))//
