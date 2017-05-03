@@ -58,7 +58,8 @@ public class ExtractTree {
 					level_4.forEach((levelName_4, values) -> {
 						result.append("                            {\n");
 						result.append("                                text: '" + levelName_4 + "',\n");
-						result.append("                                href: '" + values.solrUrl + "',\n");
+						result.append("                                solr: true,\n");
+						result.append("                                href: '" + values.solrUrl.toString().replaceAll("wt\\=csv", "wt=json") + "',\n");
 						result.append("                                nodes: [\n");
 
 						values.products.stream().forEach(article -> {
